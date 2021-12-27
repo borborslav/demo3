@@ -1,12 +1,11 @@
 ##################
 provider "google" {
-  credentials = file("credentials.json")
+  //credentials = file("../../../credentials/AppEngineMy.json") // PaaS Platform as a service
+  credentials = file("../../../credentials/ComputeEngineMy.json") // IaaS Infrastructure as a service
   project     = "teak-strength-332610"
   region      = "us-central1"
 }
 ####################################
-
-
 terraform {
   required_providers {
     postgresql = {
@@ -16,29 +15,28 @@ terraform {
   }
 }
 
-
-
-
-resource "google_sql_database_instance" "test1" {
-  name             = "test1"
+resource "google_sql_database_instance" "test5" {
+  name             = "test5"
   database_version = "POSTGRES_11"
   region           = "us-central1"
-
   settings {
-    # Second-generation instance tiers are based on the machine
-    # type. See argument reference below.
-    tier = "db-n1-standard-4"
+    //tier = "db-n1-standard-4"
+    tier = "db-f1-micro"
   }
+  deletion_protection = "false"
 }
 
-
+/*
 resource "google_sql_user" "postgres" {
   project  = "test-project"
   name     = "postgres"
   instance = google_sql_database_instance.test1.name
-  password = "xxxxxxxx"
+  password = "xxxxxxxx" // for test delete before push to git
 }
+*/
 
-resource "postgresql_database" "test_db" {
-  name = "test_db"
+/*
+resource "postgresql_database" "test_db3" {
+  name = "test_db3"
 }
+*/
